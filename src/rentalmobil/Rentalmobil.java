@@ -15,7 +15,7 @@ public class Rentalmobil {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       new halutama().setVisible(true);
+       new login().setVisible(true);
     }
     
 }

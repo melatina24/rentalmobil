@@ -833,7 +833,7 @@
             <Component class="javax.swing.JLabel" name="jLabel12">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/rentalmobil/img/icons8-car-badge-60.png"/>
+                  <Image iconType="3" name="/rentalmobil/img/icons8-logout-rounded-down-65.png"/>
                 </Property>
               </Properties>
             </Component>

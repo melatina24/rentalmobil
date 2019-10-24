@@ -483,7 +483,7 @@ public class halutama extends javax.swing.JFrame {
             }
         });
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-car-badge-60.png"))); // NOI18N
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-logout-rounded-down-65.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);

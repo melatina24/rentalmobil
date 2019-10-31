@@ -4,18 +4,46 @@
  * and open the template in the editor.
  */
 package rentalmobil;
-
+import javax.swing.JOptionPane;
 /**
  *
  * @author HP
  */
 public class halutama extends javax.swing.JFrame {
-
+String hak_akses;
     /**
      * Creates new form halutama
      */
-    public halutama() {
+    public halutama(String akses) {
         initComponents();
+        hak_akses = akses;
+        switch(hak_akses){
+            case "admin":
+                LoginAdmin();
+                break;
+            case "umum":
+                LoginPetugas();
+                break;
+        }
+        
+    }
+    public void LoginAdmin(){
+        btnmobil.setEnabled(true);
+        btnkategori.setEnabled(true);
+        btnsopir.setEnabled(true);
+        btnpegawai.setEnabled(true);
+        btnpeminjaman.setEnabled(false);
+        btnpengembalian.setEnabled(false);
+        btnlaporan.setEnabled(true);
+    }
+    public void LoginPetugas(){
+        btnmobil.setEnabled(false);
+        btnkategori.setEnabled(false);
+        btnsopir.setEnabled(false);
+        btnpegawai.setEnabled(false);
+        btnpeminjaman.setEnabled(true);
+        btnpengembalian.setEnabled(true);
+        btnlaporan.setEnabled(true);
     }
 
     /**
@@ -37,25 +65,25 @@ public class halutama extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnmobil = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        btnsopir = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
+        btnpegawai = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        btnpeminjaman = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        btnpengembalian = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
+        btnlaporan = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jButton10 = new javax.swing.JButton();
+        btnkategori = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -159,14 +187,14 @@ public class halutama extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-car-badge-60.png"))); // NOI18N
 
-        jButton1.setBackground(new java.awt.Color(0, 204, 255));
-        jButton1.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 23)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Mobil");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnmobil.setBackground(new java.awt.Color(0, 204, 255));
+        btnmobil.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 23)); // NOI18N
+        btnmobil.setForeground(new java.awt.Color(255, 255, 255));
+        btnmobil.setText("Mobil");
+        btnmobil.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnmobil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnmobilActionPerformed(evt);
             }
         });
 
@@ -176,7 +204,7 @@ public class halutama extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnmobil, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -189,20 +217,20 @@ public class halutama extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btnmobil)
                 .addContainerGap())
         );
 
         jPanel4.setBackground(new java.awt.Color(0, 204, 255));
 
-        jButton2.setBackground(new java.awt.Color(0, 204, 255));
-        jButton2.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 23)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText(" Sopir");
-        jButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnsopir.setBackground(new java.awt.Color(0, 204, 255));
+        btnsopir.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 23)); // NOI18N
+        btnsopir.setForeground(new java.awt.Color(255, 255, 255));
+        btnsopir.setText(" Sopir");
+        btnsopir.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnsopir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnsopirActionPerformed(evt);
             }
         });
 
@@ -216,7 +244,7 @@ public class halutama extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnsopir, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -228,20 +256,20 @@ public class halutama extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(btnsopir)
                 .addContainerGap())
         );
 
         jPanel5.setBackground(new java.awt.Color(0, 204, 255));
 
-        jButton3.setBackground(new java.awt.Color(0, 204, 255));
-        jButton3.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 23)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Pegawai");
-        jButton3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnpegawai.setBackground(new java.awt.Color(0, 204, 255));
+        btnpegawai.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 23)); // NOI18N
+        btnpegawai.setForeground(new java.awt.Color(255, 255, 255));
+        btnpegawai.setText("Pegawai");
+        btnpegawai.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnpegawai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnpegawaiActionPerformed(evt);
             }
         });
 
@@ -253,7 +281,7 @@ public class halutama extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnpegawai, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -266,7 +294,7 @@ public class halutama extends javax.swing.JFrame {
                 .addContainerGap(28, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addComponent(btnpegawai)
                 .addContainerGap())
         );
 
@@ -274,14 +302,14 @@ public class halutama extends javax.swing.JFrame {
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-add-list-60.png"))); // NOI18N
 
-        jButton4.setBackground(new java.awt.Color(0, 204, 255));
-        jButton4.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 23)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Peminjaman");
-        jButton4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnpeminjaman.setBackground(new java.awt.Color(0, 204, 255));
+        btnpeminjaman.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 23)); // NOI18N
+        btnpeminjaman.setForeground(new java.awt.Color(255, 255, 255));
+        btnpeminjaman.setText("Peminjaman");
+        btnpeminjaman.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnpeminjaman.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnpeminjamanActionPerformed(evt);
             }
         });
 
@@ -296,7 +324,7 @@ public class halutama extends javax.swing.JFrame {
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnpeminjaman, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18))))
         );
         jPanel6Layout.setVerticalGroup(
@@ -305,7 +333,7 @@ public class halutama extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
+                .addComponent(btnpeminjaman)
                 .addContainerGap())
         );
 
@@ -313,14 +341,14 @@ public class halutama extends javax.swing.JFrame {
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-assignment-return-60.png"))); // NOI18N
 
-        jButton5.setBackground(new java.awt.Color(0, 204, 255));
-        jButton5.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 23)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Pengembalian");
-        jButton5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnpengembalian.setBackground(new java.awt.Color(0, 204, 255));
+        btnpengembalian.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 23)); // NOI18N
+        btnpengembalian.setForeground(new java.awt.Color(255, 255, 255));
+        btnpengembalian.setText("Pengembalian");
+        btnpengembalian.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnpengembalian.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnpengembalianActionPerformed(evt);
             }
         });
 
@@ -334,7 +362,7 @@ public class halutama extends javax.swing.JFrame {
                 .addGap(29, 29, 29))
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton5)
+                .addComponent(btnpengembalian)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -343,7 +371,7 @@ public class halutama extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5)
+                .addComponent(btnpengembalian)
                 .addContainerGap())
         );
 
@@ -351,14 +379,14 @@ public class halutama extends javax.swing.JFrame {
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-report-file-60.png"))); // NOI18N
 
-        jButton8.setBackground(new java.awt.Color(0, 204, 255));
-        jButton8.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 23)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Laporan");
-        jButton8.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnlaporan.setBackground(new java.awt.Color(0, 204, 255));
+        btnlaporan.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 23)); // NOI18N
+        btnlaporan.setForeground(new java.awt.Color(255, 255, 255));
+        btnlaporan.setText("Laporan");
+        btnlaporan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnlaporan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnlaporanActionPerformed(evt);
             }
         });
 
@@ -368,7 +396,7 @@ public class halutama extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnlaporan, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -381,7 +409,7 @@ public class halutama extends javax.swing.JFrame {
                 .addContainerGap(33, Short.MAX_VALUE)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton8)
+                .addComponent(btnlaporan)
                 .addContainerGap())
         );
 
@@ -389,14 +417,14 @@ public class halutama extends javax.swing.JFrame {
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-car-badge-60.png"))); // NOI18N
 
-        jButton10.setBackground(new java.awt.Color(0, 204, 255));
-        jButton10.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 23)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setText("Kategori");
-        jButton10.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        btnkategori.setBackground(new java.awt.Color(0, 204, 255));
+        btnkategori.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 23)); // NOI18N
+        btnkategori.setForeground(new java.awt.Color(255, 255, 255));
+        btnkategori.setText("Kategori");
+        btnkategori.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnkategori.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                btnkategoriActionPerformed(evt);
             }
         });
 
@@ -406,7 +434,7 @@ public class halutama extends javax.swing.JFrame {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnkategori, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -419,7 +447,7 @@ public class halutama extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton10)
+                .addComponent(btnkategori)
                 .addContainerGap())
         );
 
@@ -552,26 +580,30 @@ public class halutama extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnmobilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmobilActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        mobil crud_mobil = new mobil(hak_akses);
+        this.dispose();
+        crud_mobil.show();
+        
+    }//GEN-LAST:event_btnmobilActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnsopirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsopirActionPerformed
         // TODO add your handling code here:
         new sopir().setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnsopirActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnpegawaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpegawaiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnpegawaiActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnpeminjamanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpeminjamanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnpeminjamanActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnpengembalianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpengembalianActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnpengembalianActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
@@ -581,63 +613,33 @@ public class halutama extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void btnlaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlaporanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_btnlaporanActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void btnkategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnkategoriActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_btnkategoriActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(halutama.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(halutama.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(halutama.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(halutama.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new halutama().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btnkategori;
+    private javax.swing.JButton btnlaporan;
+    private javax.swing.JButton btnmobil;
+    private javax.swing.JButton btnpegawai;
+    private javax.swing.JButton btnpeminjaman;
+    private javax.swing.JButton btnpengembalian;
+    private javax.swing.JButton btnsopir;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

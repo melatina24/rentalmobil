@@ -159,9 +159,9 @@
                   <EmptySpace pref="57" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="btnhapus" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnedit" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnedit" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>

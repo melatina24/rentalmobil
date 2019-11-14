@@ -18,10 +18,10 @@ String hak_akses;
         initComponents();
         hak_akses = akses;
         switch(hak_akses){
-            case "admin":
+            case "Admin":
                 LoginAdmin();
                 break;
-            case "umum":
+            case "Pegawai":
                 LoginPetugas();
                 break;
         }
@@ -90,6 +90,9 @@ String hak_akses;
         jPanel11 = new javax.swing.JPanel();
         jButton9 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
+        jPanel13 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         jPanel8.setBackground(new java.awt.Color(0, 204, 255));
 
@@ -178,6 +181,7 @@ String hak_akses;
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Rentalan ->Halaman Utama");
 
         jPanel1.setBackground(new java.awt.Color(51, 102, 255));
 
@@ -265,7 +269,7 @@ String hak_akses;
         btnpegawai.setBackground(new java.awt.Color(0, 204, 255));
         btnpegawai.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 23)); // NOI18N
         btnpegawai.setForeground(new java.awt.Color(255, 255, 255));
-        btnpegawai.setText("Pegawai");
+        btnpegawai.setText("Pengguna");
         btnpegawai.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnpegawai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -406,7 +410,7 @@ String hak_akses;
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnlaporan)
@@ -528,6 +532,35 @@ String hak_akses;
             .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jPanel13.setBackground(new java.awt.Color(51, 102, 255));
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText(" Design & Developed By Latifa Febriani & Melatina -2019");
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator1)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel14)
+                .addGap(361, 361, 361))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -546,6 +579,7 @@ String hak_akses;
                         .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -559,9 +593,10 @@ String hak_akses;
                         .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(28, 28, 28)
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
+                .addGap(65, 65, 65)
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -574,7 +609,9 @@ String hak_akses;
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -588,18 +625,20 @@ String hak_akses;
         
     }//GEN-LAST:event_btnmobilActionPerformed
 
-    private void btnsopirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsopirActionPerformed
+    private void btnsopirActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
-<<<<<<< HEAD
-       
-    }//GEN-LAST:event_jButton2ActionPerformed
-=======
-        new sopir().setVisible(true);
-    }//GEN-LAST:event_btnsopirActionPerformed
->>>>>>> 1709e631f5b24b73ff2f6317c44698595147b053
+        sopir crud_sopir = new sopir(hak_akses);
+        this.dispose();
+        crud_sopir.show();
+        
+        
 
+    }                                        
     private void btnpegawaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpegawaiActionPerformed
         // TODO add your handling code here:
+        pengguna crud_pengguna = new pengguna(hak_akses);
+        this.dispose();
+        crud_pengguna.show();
     }//GEN-LAST:event_btnpegawaiActionPerformed
 
     private void btnpeminjamanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpeminjamanActionPerformed
@@ -624,10 +663,19 @@ String hak_akses;
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
+         int jawab=JOptionPane.showConfirmDialog(this,"Anda yakin ingin LogOut?","Konfirmasi",
+                JOptionPane.YES_NO_OPTION);
+         if(jawab == JOptionPane.YES_OPTION){
+             new login().setVisible(true);
+             this.dispose();
+         }
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void btnkategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnkategoriActionPerformed
-        // TODO add your handling code here:
+
+        kategori crud_kategori = new kategori(hak_akses);
+        this.dispose();
+        crud_kategori.show();
     }//GEN-LAST:event_btnkategoriActionPerformed
 
     /**
@@ -651,6 +699,7 @@ String hak_akses;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -663,6 +712,7 @@ String hak_akses;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -671,5 +721,6 @@ String hak_akses;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

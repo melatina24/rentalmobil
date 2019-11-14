@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+
 /**
  *
  * @author HP
@@ -23,7 +24,7 @@ public class sopir extends javax.swing.JFrame {
      private DefaultTableModel tabel;
 Connection konek;
     koneksi getCnn = new koneksi();
-String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
+    String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
     /**
      * Creates new form sopir
      */
@@ -33,6 +34,78 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
          tampildata();
          cleardata();
     }
+    public void HapusTable(){
+        int row = tabel.getRowCount();
+        for(int i = 0;i<row;i++){
+            tabel.removeRow(i);
+        }
+    
+    }
+     void tampildata(){
+         String[] kolom = {"Kd Sopir","Nama","Jenis Kelamin","Alamat","Foto","Biaya Sewa"};
+         tabel = new DefaultTableModel(null,kolom){
+        Class[] types = new Class []{
+        java.lang.String.class,
+        java.lang.String.class,
+        java.lang.String.class,
+        java.lang.String.class,
+        java.lang.String.class,
+        java.lang.String.class       
+             };
+             public Class getColumnClass (int columnIndex){
+             return types [columnIndex];
+             }
+             public boolean isCellEditable (int row,int col){
+             int cola = tabel.getColumnCount();
+             return (col<cola) ? false :true;
+             }
+         };
+         tbl_sopir.setModel(tabel);
+         try {
+            konek = null;
+            koneksi getCnn = new koneksi();
+            konek =getCnn.getConnection();
+            HapusTable();
+            String sql =""+
+                    " SELECT * FROM sopir order by kd_sopir asc";
+            Statement state = konek.createStatement();
+            ResultSet result = state.executeQuery(sql);
+            while(result.next()){
+                String Xkd_sopir= result.getString(1);
+                String Xnama= result.getString(2);
+                String Xjenis_kelamin= result.getString(3);
+                String Xalamat= result.getString(4);
+                String Xfoto= result.getString(5);
+                String Xbiaya_sopir= result.getString(6);
+                Object[] data ={Xkd_sopir,Xnama,Xjenis_kelamin,Xalamat,Xfoto,Xbiaya_sopir};
+                tabel.addRow(data);
+                
+            }
+            tbl_sopir.getColumnModel().getColumn(0).setPreferredWidth(100);
+            tbl_sopir.getColumnModel().getColumn(1).setPreferredWidth(400);
+            tbl_sopir.getColumnModel().getColumn(2).setPreferredWidth(200);
+            tbl_sopir.getColumnModel().getColumn(3).setPreferredWidth(300);
+            tbl_sopir.getColumnModel().getColumn(4).setPreferredWidth(150);
+            tbl_sopir.getColumnModel().getColumn(5).setPreferredWidth(150);
+            
+        } catch (Exception ex) {
+           
+            JOptionPane.showMessageDialog(this,"Error oi:"+ ex);
+        }
+    }
+    
+    private void cleardata(){
+        txt_nama.setText("");
+        txt_alamat.setText("");
+        txt_harga.setText("");
+        txt_foto.setText("");
+        txt_id.setText("");
+        jrblk.setSelected(true);
+        btn_del.setEnabled(false);
+        btn_edit.setEnabled(false);
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,10 +127,9 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
         txt_cari = new javax.swing.JTextField();
         btn_search = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel8 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        txt_foto = new javax.swing.JTextField();
+        txt_harga = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txt_alamat = new javax.swing.JTextArea();
@@ -67,14 +139,20 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
         jrbpr = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         txt_nama = new javax.swing.JTextField();
-        txt_foto1 = new javax.swing.JTextField();
+        txt_foto = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         btn_save = new javax.swing.JButton();
         btn_edit = new javax.swing.JButton();
         btn_del = new javax.swing.JButton();
+        txt_id = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btn_back = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        btn_back = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu->Data Sopir");
@@ -91,22 +169,24 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(27, 27, 27)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(21, 21, 21))
+                .addContainerGap())
         );
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
+        tbl_sopir.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        tbl_sopir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tbl_sopir.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -118,6 +198,14 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_sopir.setGridColor(new java.awt.Color(102, 102, 255));
+        tbl_sopir.setSelectionBackground(new java.awt.Color(102, 102, 255));
+        tbl_sopir.setSelectionForeground(new java.awt.Color(0, 255, 255));
+        tbl_sopir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_sopirMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_sopir);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -137,7 +225,7 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txt_cari, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                     .addComponent(jSeparator1))
@@ -154,28 +242,20 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
                 .addGap(19, 19, 19))
         );
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 204, 255));
-        jLabel8.setText("Cari Berdasarkan Nama");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(98, Short.MAX_VALUE)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -184,9 +264,11 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel7.setLabelFor(txt_harga);
         jLabel7.setText("Harga sewa/hari");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel6.setLabelFor(txt_foto);
         jLabel6.setText("Foto");
 
         txt_alamat.setColumns(20);
@@ -194,6 +276,7 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
         jScrollPane2.setViewportView(txt_alamat);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel5.setLabelFor(txt_alamat);
         jLabel5.setText("Alamat");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -210,6 +293,7 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
         jrbpr.setText("Perempuan");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel3.setLabelFor(txt_nama);
         jLabel3.setText("Nama");
 
         txt_nama.addActionListener(new java.awt.event.ActionListener() {
@@ -218,10 +302,12 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
             }
         });
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBackground(new java.awt.Color(102, 102, 255));
 
         btn_save.setBackground(new java.awt.Color(0, 204, 255));
         btn_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-save-all-60.png"))); // NOI18N
+        btn_save.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btn_save.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         btn_save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_saveActionPerformed(evt);
@@ -238,19 +324,24 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
 
         btn_del.setBackground(new java.awt.Color(0, 204, 255));
         btn_del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-delete-bin-60.png"))); // NOI18N
+        btn_del.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_delActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(28, 28, 28)
                 .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addComponent(btn_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(27, 27, 27)
                 .addComponent(btn_del, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,49 +349,65 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btn_del, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_save, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_edit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addComponent(btn_edit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        txt_id.setEnabled(false);
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel9.setLabelFor(txt_id);
+        jLabel9.setText("Kode Sopir");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel8.setText("Rp.");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addContainerGap()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(0, 2, Short.MAX_VALUE)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addComponent(jrblk)
                                         .addGap(18, 18, 18)
                                         .addComponent(jrbpr))
-                                    .addComponent(txt_foto1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(txt_foto)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txt_harga, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                                    .addComponent(txt_foto)))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel9))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(18, 18, 18))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -314,25 +421,52 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(txt_foto, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(txt_foto1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_foto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txt_harga, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(29, 29, 29)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 204, 255));
         jLabel2.setText("Input Data Sopir");
+
+        jPanel7.setBackground(new java.awt.Color(51, 102, 255));
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText(" Design & Developed By Latifa Febriani & Melatina -2019");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(296, 296, 296))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel8.setBackground(new java.awt.Color(102, 102, 255));
 
         btn_back.setBackground(new java.awt.Color(0, 204, 255));
         btn_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-back-60.png"))); // NOI18N
@@ -342,17 +476,31 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
             }
         });
 
-        jPanel7.setBackground(new java.awt.Color(51, 102, 255));
+        jLabel11.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Kembali");
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 51, Short.MAX_VALUE)
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_back, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -374,25 +522,24 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53))))
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67))))
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
-                        .addComponent(btn_back))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(25, 25, 25)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -406,7 +553,7 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -422,15 +569,124 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
         // TODO add your handling code here:
+        kd_sopir = txt_id.getText();
+        nama = txt_nama.getText();
+        String JK ="";
+        if(jrblk.isSelected()){
+            JK ="Laki-laki";
+        }
+        else{
+            JK="Perempuan";
+        }
+        alamat = txt_alamat.getText();
+        foto=txt_foto.getText();
+        biaya_sopir=txt_harga.getText();
+        try {
+            konek = null;
+            konek =getCnn.getConnection();
+            String sql="UPDATE sopir SET nama='"+nama+"',"+
+                            "jenis_kelamin='"+JK+"',"+
+                            "alamat='"+alamat+"',"+
+                            "foto='"+foto+"',"+
+                            "biaya_sopir='"+biaya_sopir+"'"+
+                            "WHERE kd_sopir='"+kd_sopir+"'";
+            Statement state =konek.createStatement();
+            state.executeUpdate(sql);
+            JOptionPane.showMessageDialog(this,"Data Berhasil  diupdate!","SUCCESS",JOptionPane.INFORMATION_MESSAGE);
+            cleardata();
+        tampildata();
+        } catch (Exception e) {
+             e.printStackTrace();
+             JOptionPane.showMessageDialog(this, "Data Gagal diupdate!!!","ERROR",JOptionPane.WARNING_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btn_editActionPerformed
 
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
         // TODO add your handling code here:
+        halutama menu = new halutama(hak_akses);
+        this.dispose();
+        menu.show();
     }//GEN-LAST:event_btn_backActionPerformed
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
         // TODO add your handling code here:
+    String JK ="";
+        if(jrblk.isSelected()){
+            JK ="Laki-laki";
+        }
+        else{
+            JK="Perempuan";
+        }
+    try {
+        konek = null;
+        konek =getCnn.getConnection();
+        Statement state=konek.createStatement();
+        state.executeUpdate("INSERT INTO sopir set nama='"+txt_nama.getText()+"',"+
+                            "jenis_kelamin='"+JK+"',"+
+                            "alamat='"+txt_alamat.getText()+"',"+
+                            "foto='"+txt_foto.getText()+"',"+
+                            "biaya_sopir='"+txt_harga.getText()+"'");
+        JOptionPane.showMessageDialog(this,"Data Berhasil  ditambah!","SUCCESS",JOptionPane.INFORMATION_MESSAGE);
+        cleardata();
+        tampildata();
+        } catch (Exception e) {
+             e.printStackTrace();
+              JOptionPane.showMessageDialog(this, "Data Gagal ditambahkan!!!","ERROR",JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btn_saveActionPerformed
+
+    private void tbl_sopirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_sopirMouseClicked
+        // TODO add your handling code here:
+        btn_save.setEnabled(false);
+        btn_del.setEnabled(true);
+        btn_edit.setEnabled(true);
+        
+         String Kd_sopir =tbl_sopir.getValueAt(tbl_sopir.getSelectedRow(),0).toString();
+         try {
+                konek = null;
+                konek =getCnn.getConnection();
+                String sql = "SELECT * FROM sopir WHERE kd_sopir ='"+Kd_sopir+"'";
+                Statement state = konek.createStatement();
+                ResultSet result = state.executeQuery(sql);
+                if(result.first()){
+                txt_id.setText(result.getString(1));
+                txt_nama.setText(result.getString(2));
+                if( result.getString(3).equals("Laki-laki")){
+                    jrblk.setSelected(true);
+                } 
+                else{
+                    jrbpr.setSelected(true);
+                }
+                txt_alamat.setText(result.getString(4));
+                txt_foto.setText(result.getString(5));
+                txt_harga.setText(result.getString(6));
+                
+                
+                }
+                
+        } catch (Exception ex) {
+             JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_tbl_sopirMouseClicked
+
+    private void btn_delActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delActionPerformed
+        // TODO add your handling code here:
+        try {
+            konek = null;
+            konek=getCnn.getConnection();
+            String sql ="DELETE FROM sopir WHERE kd_sopir='"+txt_id.getText()+"'";
+            Statement state =konek.createStatement();
+            state.executeUpdate(sql);
+            HapusTable();
+            tampildata();
+            JOptionPane.showMessageDialog(this, "Data Berhasil dihapus!");
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+        cleardata();
+    }//GEN-LAST:event_btn_delActionPerformed
 
     /**
      * @param args the command line arguments
@@ -471,6 +727,8 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
     private javax.swing.JButton btn_search;
     private javax.swing.ButtonGroup btngroupjk;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -478,6 +736,7 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -485,6 +744,7 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
@@ -494,15 +754,10 @@ String kd_sopir,nama,jenis_kelamin,alamat,foto,biaya_sopir,hak_akses;
     private javax.swing.JTextArea txt_alamat;
     private javax.swing.JTextField txt_cari;
     private javax.swing.JTextField txt_foto;
-    private javax.swing.JTextField txt_foto1;
+    private javax.swing.JTextField txt_harga;
+    private javax.swing.JTextField txt_id;
     private javax.swing.JTextField txt_nama;
     // End of variables declaration//GEN-END:variables
 
-    private void tampildata() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void cleardata() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 21, 2019 at 04:10 AM
+-- Generation Time: Oct 17, 2019 at 07:19 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.5
 
@@ -46,14 +46,7 @@ CREATE TABLE IF NOT EXISTS `inventaris` (
   KEY `petugas_kd` (`petugas_kd`),
   KEY `mobil_kd` (`mobil_kd`),
   KEY `sopir_kd` (`sopir_kd`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `inventaris`
---
-
-INSERT INTO `inventaris` (`kd_inventaris`, `no_inventaris`, `petugas_kd`, `mobil_kd`, `sopir_kd`, `tgl_pinjam`, `tgl_kembali`, `lama_sewa`, `total_bayar`, `uang_bayar`, `uang_kembali`, `diskon`) VALUES
-(1, 'IN001', '3', '1', '1', '2019-11-06', '2019-11-07', '1', 200000, 20000, 100, 3);
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -66,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `kategori` (
   `kd_kategori` int(11) NOT NULL AUTO_INCREMENT,
   `jenis_mobil` varchar(50) NOT NULL,
   PRIMARY KEY (`kd_kategori`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kategori`
@@ -113,23 +106,22 @@ DROP TABLE IF EXISTS `petugas`;
 CREATE TABLE IF NOT EXISTS `petugas` (
   `kd_petugas` int(11) NOT NULL AUTO_INCREMENT,
   `nama` varchar(50) NOT NULL,
-  `jenis_kelamin` varchar(30) NOT NULL,
+  `jenis_kelamin` enum('L','P') NOT NULL,
   `alamat` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `hak_akses` varchar(50) NOT NULL,
+  `foto` varchar(50) NOT NULL,
   PRIMARY KEY (`kd_petugas`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `petugas`
 --
 
-INSERT INTO `petugas` (`kd_petugas`, `nama`, `jenis_kelamin`, `alamat`, `username`, `password`, `hak_akses`) VALUES
-(1, 'Latifa', 'Perempuan', 'Sengon', 'admin', 'admin', 'Admin'),
-(2, 'Mela', 'Perempuan', 'Tulis', 'mela', '123', 'Pegawai'),
-(3, 'saya', 'Laki-laki', 'dimana-mana', 'saya', 'saya', 'Pegawai'),
-(4, 'admin', 'Laki-laki', 'cobalagi', 'coba', 'coba', 'Admin');
+INSERT INTO `petugas` (`kd_petugas`, `nama`, `jenis_kelamin`, `alamat`, `username`, `password`, `hak_akses`, `foto`) VALUES
+(1, 'Latifa', 'P', 'Sengon', 'admin', 'admin', 'admin', 'foto.jpg'),
+(2, 'Mela', 'P', 'Tulis', 'mela', '123', 'umum', 'foto1.jpg');
 
 -- --------------------------------------------------------
 
@@ -141,20 +133,20 @@ DROP TABLE IF EXISTS `sopir`;
 CREATE TABLE IF NOT EXISTS `sopir` (
   `kd_sopir` int(11) NOT NULL AUTO_INCREMENT,
   `nama` varchar(50) NOT NULL,
-  `jenis_kelamin` varchar(20) NOT NULL,
+  `jenis_kelamin` enum('L','P') NOT NULL,
   `alamat` varchar(50) NOT NULL,
+  `foto` varchar(50) NOT NULL,
   `biaya_sopir` int(11) NOT NULL,
   PRIMARY KEY (`kd_sopir`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sopir`
 --
 
-INSERT INTO `sopir` (`kd_sopir`, `nama`, `jenis_kelamin`, `alamat`, `biaya_sopir`) VALUES
-(1, 'Hagam', 'Laki-laki', 'Jakarta', 100000),
-(2, 'Aska', 'Laki-laki', 'Jakarta Utara', 150000),
-(12, 'ew1', 'Laki-laki', 'werew', 11);
+INSERT INTO `sopir` (`kd_sopir`, `nama`, `jenis_kelamin`, `alamat`, `foto`, `biaya_sopir`) VALUES
+(1, 'Hagam', 'L', 'Jakarta', 'foto.jpg', 100000),
+(2, 'Aska', 'L', 'Jakarta Utara', 'foto1.jpg', 150000);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

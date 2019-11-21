@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLDataException;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -34,50 +35,54 @@ String kd_mobil,no_polisi,merk,harga,kategori,hak_akses;
         
     }
     private void LoadData(){
-        String[] kolom = {"KD Mobil","No Polisi","Merk","Harga","Kategori"};
+        String[] kolom = {"KD MOBIL","NO POLISI","MERK","HARGA","KATEGORI"};
         _table = new DefaultTableModel(null,kolom){
-            Class[] types = new Class[]{
-                java.lang.String.class,
-                java.lang.String.class,
-                java.lang.String.class,
-                java.lang.String.class,
-                java.lang.String.class
-            };
-            public Class getColumnClass(int columnIndex){
-             return types [columnIndex];
-            }
-            public boolean isCellEditable(int row,int col){
-                int cola = _table.getColumnCount();
-                return(col<cola) ? false : true;
-            }
+        Class[] types = new Class[]{
+            java.lang.String.class,
+            java.lang.String.class,
+            java.lang.String.class,
+            java.lang.String.class,
+            java.lang.String.class
+            
         };
+        public Class getColumnClass(int columnIndex){
+            return types [columnIndex];
+        }
+        public boolean isCellEditable(int row,int col){
+            int cola = _table.getColumnCount();
+            return (col < cola )? false:true;
+        }
+    };
+        tblmobil.setModel(_table);
         try {
             _Cnn = null;
             koneksi getCnn = new koneksi();
             _Cnn = getCnn.getConnection();
             HapusTable();
-            String sql = "" +
-                    "select  kd_mobil,no_polisi,merk,harga,kategori from mobil order by kd_mobil asc";
-            Statement stat = _Cnn.createStatement();
-            ResultSet res = stat.executeQuery(sql);
-                while(res.next()){
-                    String xkdmobil = res.getString(1);
-                    String xnopolisi = res.getString(2);
-                    String xmerk = res.getString(3);
-                    String xharga = res.getString(4);
-                    String xkategori = res.getString(5);
-                    Object[] data = {xkdmobil,xnopolisi,xmerk,xharga,xkategori};
-                    _table.addRow(data);
+            String sql = ""+
+                    " select kd_mobil,no_polisi,merk,harga,kategori_kd from mobil order by kd_mobil asc";
+            Statement stm = _Cnn.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
+                while(rs.next()){
+                    String xkdmobil = rs.getString(1);
+                    String xnopolisi = rs.getString(2);
+                    String xmerek = rs.getString(3);
+                    String xharga = rs.getString(4);
+                    String xkategori = rs.getString(5);
+                Object[] data = {xkdmobil,xnopolisi,xmerek,xharga,xkategori};
+                _table.addRow(data);
                 }
-                tblmobil.getColumnModel().getColumn(0).setPreferredWidth(400);
-                tblmobil.getColumnModel().getColumn(1).setPreferredWidth(1000);
-                tblmobil.getColumnModel().getColumn(2).setPreferredWidth(1000);
-                tblmobil.getColumnModel().getColumn(3).setPreferredWidth(1000);
+                tblmobil.getColumnModel().getColumn(0).setPreferredWidth(75);
+                tblmobil.getColumnModel().getColumn(1).setPreferredWidth(200);
+                tblmobil.getColumnModel().getColumn(2).setPreferredWidth(200);
+                tblmobil.getColumnModel().getColumn(3).setPreferredWidth(200);
                 tblmobil.getColumnModel().getColumn(4).setPreferredWidth(200);
+                
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,"Error :"+ ex);
+            JOptionPane.showMessageDialog(this,"Error : "+ ex);
         }
     }
+    
     public void HapusTable(){
         int row = _table.getRowCount();
         for(int i = 0;i<row;i++){
@@ -85,16 +90,19 @@ String kd_mobil,no_polisi,merk,harga,kategori,hak_akses;
         }
     
     }
-    private void form_clear(){
+     private void form_clear(){
         txt_kdmobil.setEnabled(true);
         btnsimpan.setEnabled(true);
         btnedit.setEnabled(false);
         btnhapus.setEnabled(false);
+        txt_kdmobil.setText("");
         txt_nopolisi.setText("");
         txt_merk.setText("");
         txt_harga.setText("");
+        cmb_kategori.setSelectedIndex(0);
     }
 
+   
    
     /**
      * This method is called from within the constructor to initialize the form.
@@ -119,7 +127,7 @@ String kd_mobil,no_polisi,merk,harga,kategori,hak_akses;
         txt_nopolisi = new javax.swing.JTextField();
         txt_merk = new javax.swing.JTextField();
         txt_harga = new javax.swing.JTextField();
-        cmb_item = new javax.swing.JComboBox<>();
+        cmb_kategori = new javax.swing.JComboBox<>();
         btnhapus = new javax.swing.JButton();
         btnedit = new javax.swing.JButton();
         btnsimpan = new javax.swing.JButton();
@@ -128,7 +136,8 @@ String kd_mobil,no_polisi,merk,harga,kategori,hak_akses;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setText("FORM DATA MOBIL");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -180,7 +189,7 @@ String kd_mobil,no_polisi,merk,harga,kategori,hak_akses;
         Kategori.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         Kategori.setText("Kategori");
 
-        cmb_item.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmb_kategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnhapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-delete-bin-60.png"))); // NOI18N
 
@@ -217,7 +226,7 @@ String kd_mobil,no_polisi,merk,harga,kategori,hak_akses;
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txt_harga, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmb_item, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(cmb_kategori, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -255,8 +264,8 @@ String kd_mobil,no_polisi,merk,harga,kategori,hak_akses;
                 .addGap(31, 31, 31)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Kategori)
-                    .addComponent(cmb_item, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                    .addComponent(cmb_kategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,7 +319,7 @@ String kd_mobil,no_polisi,merk,harga,kategori,hak_akses;
         no_polisi = txt_nopolisi.getText();
         merk = txt_merk.getText();
         harga = txt_harga.getText();
-        String cmbakses = cmb_item.getSelectedItem().toString();
+        String cmbakses = cmb_kategori.getSelectedItem().toString();
         kategori = cmbakses;
         
         try {
@@ -338,7 +347,7 @@ String kd_mobil,no_polisi,merk,harga,kategori,hak_akses;
     private javax.swing.JButton btnedit;
     private javax.swing.JButton btnhapus;
     private javax.swing.JButton btnsimpan;
-    private javax.swing.JComboBox<String> cmb_item;
+    private javax.swing.JComboBox<String> cmb_kategori;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

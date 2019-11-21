@@ -643,6 +643,9 @@ String hak_akses;
 
     private void btnpeminjamanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpeminjamanActionPerformed
         // TODO add your handling code here:
+         transaksi crud = new transaksi(hak_akses);
+        this.dispose();
+        crud.show();
     }//GEN-LAST:event_btnpeminjamanActionPerformed
 
     private void btnpengembalianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpengembalianActionPerformed

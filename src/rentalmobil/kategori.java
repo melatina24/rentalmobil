@@ -83,6 +83,7 @@ public class kategori extends javax.swing.JFrame {
     private void cleardata(){
         txt_nama.setText("");
         txt_kd.setText("");
+        txt_cari.setText("");
         btn_del.setEnabled(false);
         btn_edit.setEnabled(false);
     }
@@ -109,6 +110,7 @@ public class kategori extends javax.swing.JFrame {
         btn_save = new javax.swing.JButton();
         btn_edit = new javax.swing.JButton();
         btn_del = new javax.swing.JButton();
+        btn_refresh = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         txt_cari = new javax.swing.JTextField();
@@ -120,7 +122,7 @@ public class kategori extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 51, 153));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -196,8 +198,7 @@ public class kategori extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.setBackground(new java.awt.Color(102, 102, 255));
 
         btn_save.setBackground(new java.awt.Color(0, 204, 255));
         btn_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-save-all-60.png"))); // NOI18N
@@ -223,27 +224,41 @@ public class kategori extends javax.swing.JFrame {
             }
         });
 
+        btn_refresh.setText("refresh");
+        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap()
                 .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_del, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addGap(45, 45, 45)
+                .addComponent(btn_refresh)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_del, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
-                    .addComponent(btn_edit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_del, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                            .addComponent(btn_edit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(btn_refresh)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -266,6 +281,11 @@ public class kategori extends javax.swing.JFrame {
         btn_search.setBackground(new java.awt.Color(255, 255, 255));
         btn_search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-search-48.png"))); // NOI18N
         btn_search.setBorder(null);
+        btn_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_searchActionPerformed(evt);
+            }
+        });
 
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
 
@@ -292,7 +312,7 @@ public class kategori extends javax.swing.JFrame {
                 .addGap(19, 19, 19))
         );
 
-        jButton1.setBackground(new java.awt.Color(0, 204, 204));
+        jButton1.setBackground(new java.awt.Color(102, 102, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-back-60.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -314,7 +334,7 @@ public class kategori extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 112, Short.MAX_VALUE)
+                        .addGap(0, 120, Short.MAX_VALUE)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(22, 22, 22))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
@@ -347,7 +367,7 @@ public class kategori extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Design & Developed By Latifa & Melatina");
+        jLabel5.setText("Designed & Developed By Latifa & Melatina");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -360,8 +380,8 @@ public class kategori extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(271, 271, 271))
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(215, 215, 215))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -473,6 +493,56 @@ public class kategori extends javax.swing.JFrame {
         cleardata();
     }//GEN-LAST:event_btn_delActionPerformed
 
+    private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
+        // TODO add your handling code here:
+        String cari =txt_cari.getText();
+         String[] kolom = {"Kd Kategori","Nama Kategori"};
+         tabel = new DefaultTableModel(null,kolom){
+        Class[] types = new Class []{
+        java.lang.String.class,
+        java.lang.String.class     
+             };
+        public Class getColumnClass (int columnIndex){
+            return types[columnIndex];
+        }
+        public boolean isCellEditable(int row,int cola){
+            int col = tabel.getColumnCount();
+            return (col<cola) ?false :true;
+        }        
+         };
+         tbl_kategori.setModel(tabel);
+         try {
+            konek = null;
+            koneksi getCnn = new koneksi();
+            konek =getCnn.getConnection();
+            HapusTable();
+            String sql =""+
+                    " SELECT * FROM kategori WHERE kd_kategori LIKE '%"+cari+"%'"+
+                    "OR jenis_mobil LIKE '%"+cari+"%'";
+            Statement state = konek.createStatement();
+            ResultSet result = state.executeQuery(sql);
+            while(result.next()){
+                String Xkd_kategori= result.getString(1);
+                String Xnama= result.getString(2);
+                Object[] data ={Xkd_kategori,Xnama};
+                tabel.addRow(data);
+                
+            }
+            tbl_kategori.getColumnModel().getColumn(0).setPreferredWidth(100);
+            tbl_kategori.getColumnModel().getColumn(1).setPreferredWidth(400);
+            
+        } catch (Exception ex) {
+           
+            JOptionPane.showMessageDialog(this,"Error :"+ ex);
+        }
+    }//GEN-LAST:event_btn_searchActionPerformed
+
+    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
+        // TODO add your handling code here:
+        tampildata();
+        cleardata();
+    }//GEN-LAST:event_btn_refreshActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -507,6 +577,7 @@ public class kategori extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_del;
     private javax.swing.JButton btn_edit;
+    private javax.swing.JButton btn_refresh;
     private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_search;
     private javax.swing.JButton jButton1;

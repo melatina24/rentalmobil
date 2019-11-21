@@ -106,6 +106,7 @@ private DefaultTableModel tabel;
         btn_del.setEnabled(false);
         btn_edit.setEnabled(false);
         cmb_akses.setSelectedIndex(0);
+        txt_cari.setText("");
     }
     
 
@@ -155,6 +156,7 @@ private DefaultTableModel tabel;
         jPanel6 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
+        btn_refresh = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
 
@@ -472,6 +474,13 @@ private DefaultTableModel tabel;
                 .addGap(24, 24, 24))
         );
 
+        btn_refresh.setText("refresh");
+        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -490,9 +499,15 @@ private DefaultTableModel tabel;
                         .addGap(19, 19, 19))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
+                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_refresh)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -511,6 +526,8 @@ private DefaultTableModel tabel;
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_refresh)
+                                .addGap(10, 10, 10)
                                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())))))
         );
@@ -519,7 +536,7 @@ private DefaultTableModel tabel;
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText(" Design & Developed By Latifa Febriani & Melatina -2019");
+        jLabel11.setText(" Designed & Developed By Latifa Febriani & Melatina -2019");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -684,8 +701,72 @@ private DefaultTableModel tabel;
 
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
         // TODO add your handling code here:
-        
+         String cari =txt_cari.getText();
+        String[] kolom = {"Kd Pengguna","Nama","Jenis Kelamin","Alamat","Username","Password","Hak Akses"};
+         tabel = new DefaultTableModel(null,kolom){
+        Class[] types = new Class []{
+        java.lang.String.class,
+        java.lang.String.class,
+        java.lang.String.class,
+        java.lang.String.class,
+        java.lang.String.class,
+        java.lang.String.class,
+        java.lang.String.class       
+             };
+             public Class getColumnClass (int columnIndex){
+             return types [columnIndex];
+             }
+             public boolean isCellEditable (int row,int col){
+             int cola = tabel.getColumnCount();
+             return (col<cola) ? false :true;
+             }
+         };
+         tbl_pengguna.setModel(tabel);
+         try {
+            konek = null;
+            koneksi getCnn = new koneksi();
+            konek =getCnn.getConnection();
+            HapusTable();
+            String sql =""+
+                    " SELECT * FROM petugas WHERE kd_petugas LIKE '%"+cari+"%'"+
+                     "OR nama LIKE '%"+cari+"%'"+
+                    "OR jenis_kelamin LIKE '%"+cari+"%'"+
+                    "OR alamat LIKE '%"+cari+"%'"+
+                    "OR hak_akses LIKE '%"+cari+"%'"+
+                    "OR username LIKE '%"+cari+"%'";
+            Statement state = konek.createStatement();
+            ResultSet result = state.executeQuery(sql);
+            while(result.next()){
+                String Xkd= result.getString(1);
+                String Xnama= result.getString(2);
+                String Xjenis_kelamin= result.getString(3);
+                String Xalamat= result.getString(4);
+                String Xusername= result.getString(5);
+                String Xpassword= result.getString(6);
+                String Xhak_akses =result.getString(7);
+                Object[] data ={Xkd,Xnama,Xjenis_kelamin,Xalamat,Xusername,Xpassword,Xhak_akses};
+                tabel.addRow(data);
+                
+            }
+            tbl_pengguna.getColumnModel().getColumn(0).setPreferredWidth(120);
+            tbl_pengguna.getColumnModel().getColumn(1).setPreferredWidth(300);
+            tbl_pengguna.getColumnModel().getColumn(2).setPreferredWidth(150);
+            tbl_pengguna.getColumnModel().getColumn(3).setPreferredWidth(300);
+            tbl_pengguna.getColumnModel().getColumn(4).setPreferredWidth(150);
+            tbl_pengguna.getColumnModel().getColumn(5).setPreferredWidth(150);
+            tbl_pengguna.getColumnModel().getColumn(6).setPreferredWidth(120);
+            
+        } catch (Exception ex) {
+           
+            JOptionPane.showMessageDialog(this,"Error :"+ ex);
+        }
     }//GEN-LAST:event_btn_searchActionPerformed
+
+    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
+        // TODO add your handling code here:
+        tampildata();
+        cleardata();
+    }//GEN-LAST:event_btn_refreshActionPerformed
 
     /**
      * @param args the command line arguments
@@ -721,6 +802,7 @@ private DefaultTableModel tabel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_del;
     private javax.swing.JButton btn_edit;
+    private javax.swing.JButton btn_refresh;
     private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_search;
     private javax.swing.ButtonGroup buttonGroup1;

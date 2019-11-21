@@ -536,7 +536,7 @@ String hak_akses;
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText(" Design & Developed By Latifa Febriani & Melatina -2019");
+        jLabel14.setText(" Designed & Developed By Latifa Febriani & Melatina -2019");
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);

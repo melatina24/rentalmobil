@@ -619,7 +619,7 @@ String hak_akses;
 
     private void btnmobilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmobilActionPerformed
         // TODO add your handling code here:
-        mobil crud_mobil = new mobil(hak_akses);
+        form_mobil crud_mobil = new form_mobil(hak_akses);
         this.dispose();
         crud_mobil.show();
         

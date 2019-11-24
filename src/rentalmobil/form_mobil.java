@@ -33,7 +33,7 @@ int idkategori;
         hak_akses = akses;
         LoadData();
         form_clear();
-        
+        tampil_mobil();
     }
      private void LoadData(){
         String[] kolom = {"KD MOBIL","NO POLISI","MERK","HARGA","KATEGORI"};
@@ -492,33 +492,19 @@ int idkategori;
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        try {
-              _Cnn = null;
-            koneksi getCnn = new koneksi();
+
+            try {
+            _Cnn = null;
             _Cnn = getCnn.getConnection();
-            String sql = " select * from kategori where jenis_mobil='"+cmb_kategori.getSelectedItem()+"'";
-            Statement stm = _Cnn.createStatement();
-            ResultSet rs = stm.executeQuery(sql);
-            if(rs.next()){
-                idkategori = rs.getInt("kd_kategori");
-            } 
-          } catch (Exception e) {
-              JOptionPane.showMessageDialog(this, e);
-          }
-        
-        try {
-              _Cnn = null;
-            koneksi getCnn = new koneksi();
-            _Cnn = getCnn.getConnection();
-            String sqlupdate = "update mobil set no_polisi='"+txt_no+"',merk='"+txt_merk+"',harga='"+txt_harga+"',kd_kategori='"+idkategori+"' where kd_mobil ='"+txt_kd+"'";
-            Statement stm = _Cnn.createStatement();
-            stm.executeUpdate(sqlupdate);
-            LoadData();
+            String sqlupdate = "update mobil set no_polisi='"+txt_no.getText()+"',merk='"+txt_merk.getText()+"',harga='"+txt_harga.getText()+"',kategori_kd='"+idkategori+"' where kd_mobil='"+txt_kd.getText()+"'";
+            Statement stat = _Cnn.createStatement();
+            stat.executeUpdate(sqlupdate);
             form_clear();
-            JOptionPane.showMessageDialog(null, "Data Berhasil DiEdit!!");
-          } catch (Exception e) {
-              JOptionPane.showMessageDialog(this, e);
-          }
+            LoadData(); 
+            JOptionPane.showMessageDialog(null, "Data Berhasil DiEdit!!!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
@@ -572,37 +558,7 @@ int idkategori;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-       {
-        
-        
-        try {
-            _Cnn = null;
-            koneksi getCnn = new koneksi();
-            _Cnn = getCnn.getConnection();
-            HapusTable();
-            String sql = ""+
-                    "select * from mobil ";
-            Statement stm = _Cnn.createStatement();
-            ResultSet rs = stm.executeQuery(sql);
-                while(rs.next()){
-                    String xkdmobil = rs.getString(1);
-                    String xnopolisi = rs.getString(2);
-                    String xmerek = rs.getString(3);
-                    String xharga = rs.getString(4);
-                    String xkategori = rs.getString("jenis_mobil");
-                Object[] data = {xkdmobil,xnopolisi,xmerek,xharga,xkategori};
-                _table.addRow(data);
-                }
-                tabel_mobil.getColumnModel().getColumn(0).setPreferredWidth(75);
-                tabel_mobil.getColumnModel().getColumn(1).setPreferredWidth(200);
-                tabel_mobil.getColumnModel().getColumn(2).setPreferredWidth(200);
-                tabel_mobil.getColumnModel().getColumn(3).setPreferredWidth(200);
-                tabel_mobil.getColumnModel().getColumn(4).setPreferredWidth(200);
-                
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,"Error : "+ ex);
-        }
-    }
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

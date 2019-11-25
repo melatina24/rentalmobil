@@ -82,7 +82,7 @@ private DefaultTableModel tabel;
                 tabel.addRow(data);
                 
             }
-            tbl_pengguna.getColumnModel().getColumn(0).setPreferredWidth(120);
+            tbl_pengguna.getColumnModel().getColumn(0).setPreferredWidth(125);
             tbl_pengguna.getColumnModel().getColumn(1).setPreferredWidth(300);
             tbl_pengguna.getColumnModel().getColumn(2).setPreferredWidth(150);
             tbl_pengguna.getColumnModel().getColumn(3).setPreferredWidth(300);
@@ -107,6 +107,7 @@ private DefaultTableModel tabel;
         btn_edit.setEnabled(false);
         cmb_akses.setSelectedIndex(0);
         txt_cari.setText("");
+        btn_save.setEnabled(true);
     }
     
 
@@ -153,10 +154,10 @@ private DefaultTableModel tabel;
         btn_save = new javax.swing.JButton();
         btn_edit = new javax.swing.JButton();
         btn_del = new javax.swing.JButton();
+        btn_refresh = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
-        btn_refresh = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
 
@@ -165,7 +166,7 @@ private DefaultTableModel tabel;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 153, 255));
+        jPanel1.setBackground(new java.awt.Color(51, 102, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(221, 86));
 
         jLabel1.setFont(new java.awt.Font("Tw Cen MT", 1, 40)); // NOI18N
@@ -413,6 +414,14 @@ private DefaultTableModel tabel;
         btn_del.setBackground(new java.awt.Color(0, 204, 255));
         btn_del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-delete-bin-60.png"))); // NOI18N
 
+        btn_refresh.setBackground(new java.awt.Color(0, 204, 255));
+        btn_refresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-refresh-60.png"))); // NOI18N
+        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -424,13 +433,16 @@ private DefaultTableModel tabel;
                 .addComponent(btn_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_del, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_refresh)
                     .addComponent(btn_del)
                     .addComponent(btn_edit)
                     .addComponent(btn_save))
@@ -474,13 +486,6 @@ private DefaultTableModel tabel;
                 .addGap(24, 24, 24))
         );
 
-        btn_refresh.setText("refresh");
-        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_refreshActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -490,7 +495,7 @@ private DefaultTableModel tabel;
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane2)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -499,15 +504,9 @@ private DefaultTableModel tabel;
                         .addGap(19, 19, 19))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
-                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(btn_refresh)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -520,23 +519,21 @@ private DefaultTableModel tabel;
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btn_refresh)
-                                .addGap(10, 10, 10)
-                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())))))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
 
-        jPanel7.setBackground(new java.awt.Color(0, 51, 153));
+        jPanel7.setBackground(new java.awt.Color(51, 102, 255));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText(" Designed & Developed By Latifa Febriani & Melatina -2019");
+        jLabel11.setText(" Designed & Developed By Latifa Febriani & Melatina");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -559,7 +556,7 @@ private DefaultTableModel tabel;
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1173, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1209, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -728,12 +725,11 @@ private DefaultTableModel tabel;
             konek =getCnn.getConnection();
             HapusTable();
             String sql =""+
-                    " SELECT * FROM petugas WHERE kd_petugas LIKE '%"+cari+"%'"+
-                     "OR nama LIKE '%"+cari+"%'"+
-                    "OR jenis_kelamin LIKE '%"+cari+"%'"+
-                    "OR alamat LIKE '%"+cari+"%'"+
-                    "OR hak_akses LIKE '%"+cari+"%'"+
-                    "OR username LIKE '%"+cari+"%'";
+                        " SELECT * FROM petugas WHERE kd_petugas LIKE '%"+cari+"%'"+
+                        "OR nama LIKE '%"+cari+"%'"+
+                        "OR alamat LIKE '%"+cari+"%'"+
+                         "OR jenis_kelamin LIKE '%"+cari+"%'"+
+                        "OR hak_akses LIKE '%"+cari+"%'";
             Statement state = konek.createStatement();
             ResultSet result = state.executeQuery(sql);
             while(result.next()){
@@ -748,7 +744,7 @@ private DefaultTableModel tabel;
                 tabel.addRow(data);
                 
             }
-            tbl_pengguna.getColumnModel().getColumn(0).setPreferredWidth(120);
+            tbl_pengguna.getColumnModel().getColumn(0).setPreferredWidth(125);
             tbl_pengguna.getColumnModel().getColumn(1).setPreferredWidth(300);
             tbl_pengguna.getColumnModel().getColumn(2).setPreferredWidth(150);
             tbl_pengguna.getColumnModel().getColumn(3).setPreferredWidth(300);

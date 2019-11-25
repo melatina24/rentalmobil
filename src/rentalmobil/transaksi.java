@@ -14,6 +14,17 @@ import java.sql.Statement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 /**
  *
  * @author HP
@@ -24,6 +35,10 @@ public class transaksi extends javax.swing.JFrame {
     koneksi getCnn = new koneksi();
     String hak_akses;
     int idpegawai,idmobil,idsopir;
+        JasperDesign jasDes;
+        JasperReport jasRep;
+        JasperPrint jasPrint;
+        Map<String, Object> param = new HashMap<String, Object>();
     
     /**
      * Creates new form transaksi
@@ -197,7 +212,6 @@ public class transaksi extends javax.swing.JFrame {
         txt_kd = new javax.swing.JTextField();
         txt_penyewa = new javax.swing.JTextField();
         txt_lamasewa = new javax.swing.JTextField();
-        txt_ttlbayar = new javax.swing.JTextField();
         cmb_pegawai = new javax.swing.JComboBox<>();
         txt_tglpinjam = new javax.swing.JTextField();
         txt_tglkembali = new javax.swing.JTextField();
@@ -209,12 +223,16 @@ public class transaksi extends javax.swing.JFrame {
         btnsimpan = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_transaksi = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
+        btn_kembali = new javax.swing.JButton();
+        txt_ttlbayar = new javax.swing.JTextField();
+        txtcari = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        btnCetak = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
 
@@ -291,13 +309,6 @@ public class transaksi extends javax.swing.JFrame {
             }
         });
 
-        txt_ttlbayar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txt_ttlbayar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_ttlbayarActionPerformed(evt);
-            }
-        });
-
         cmb_pegawai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cmb_pegawai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PILIH" }));
         cmb_pegawai.addActionListener(new java.awt.event.ActionListener() {
@@ -358,8 +369,13 @@ public class transaksi extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(0, 204, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-refresh-60.png"))); // NOI18N
+        btnRefresh.setBackground(new java.awt.Color(0, 204, 255));
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-refresh-60.png"))); // NOI18N
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -373,7 +389,7 @@ public class transaksi extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
         );
         jPanel6Layout.setVerticalGroup(
@@ -381,7 +397,7 @@ public class transaksi extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
+                    .addComponent(btnRefresh)
                     .addComponent(btnHapus)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(btnsimpan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -400,44 +416,64 @@ public class transaksi extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_transaksi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_transaksiMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_transaksi);
 
         jPanel7.setBackground(new java.awt.Color(102, 102, 255));
 
-        jButton1.setBackground(new java.awt.Color(0, 204, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-back-60.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jLabel13.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Kembali");
+
+        btn_kembali.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-back-60.png"))); // NOI18N
+        btn_kembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_kembaliActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(22, 22, 22)
+                .addComponent(btn_kembali)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(22, 22, 22))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_kembali))
                 .addGap(24, 24, 24))
         );
+
+        txt_ttlbayar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        txtcari.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtcari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtcariKeyReleased(evt);
+            }
+        });
+
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-search-20.png"))); // NOI18N
+
+        btnCetak.setText("CETAK");
+        btnCetak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCetakActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -476,27 +512,35 @@ public class transaksi extends javax.swing.JFrame {
                                         .addComponent(jLabel6)))))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(txt_lamasewa, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel9)
-                                .addGap(6, 6, 6))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_ttlbayar, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txt_tglkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_tglpinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txt_tglpinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txt_ttlbayar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txt_lamasewa, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel9)
+                                .addGap(6, 6, 6))))
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52))))
+                        .addGap(52, 52, 52))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(btnCetak)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(20, 20, 20))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -506,7 +550,10 @@ public class transaksi extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(txt_kd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(txt_tglpinjam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_tglpinjam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15)
+                    .addComponent(btnCetak))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -536,8 +583,8 @@ public class transaksi extends javax.swing.JFrame {
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(cmbsopir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel12)
-                                .addComponent(txt_ttlbayar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel11)))
+                                .addComponent(jLabel11)
+                                .addComponent(txt_ttlbayar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(33, 33, 33)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(22, Short.MAX_VALUE))
@@ -623,7 +670,6 @@ public class transaksi extends javax.swing.JFrame {
 
     private void btnsimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsimpanActionPerformed
         // TODO add your handling code here:
-          
         int idpegawai = 2; 
         int idmobil = 2;
         int idsopir = 2;
@@ -641,6 +687,65 @@ public class transaksi extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnsimpanActionPerformed
+
+    private void txt_lamasewaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_lamasewaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_lamasewaActionPerformed
+
+    private void txt_penyewaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_penyewaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_penyewaActionPerformed
+
+    private void cmb_pegawaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_pegawaiActionPerformed
+        // TODO add your handling code here:
+        try {
+              _Cnn = null;
+            koneksi getCnn = new koneksi();
+            _Cnn = getCnn.getConnection();
+            String sql = " select * from petugas where nama='"+cmb_pegawai.getSelectedItem()+"'";
+            Statement stm = _Cnn.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
+            if(rs.next()){
+                idpegawai = rs.getInt("kd_petugas");
+            } 
+          } catch (Exception e) {
+              JOptionPane.showMessageDialog(this, e);
+          }
+    }//GEN-LAST:event_cmb_pegawaiActionPerformed
+
+    private void cmbmobilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbmobilActionPerformed
+        // TODO add your handling code here:
+        try {
+              _Cnn = null;
+            koneksi getCnn = new koneksi();
+            _Cnn = getCnn.getConnection();
+            String sql = " select * from mobil where merk='"+cmbmobil.getSelectedItem()+"'";
+            Statement stm = _Cnn.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
+            if(rs.next()){
+                idmobil = rs.getInt("kd_mobil");
+            } 
+          } catch (Exception e) {
+              JOptionPane.showMessageDialog(this, e);
+          }
+    }//GEN-LAST:event_cmbmobilActionPerformed
+
+    private void cmbsopirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbsopirActionPerformed
+        // TODO add your handling code here:
+        try {
+              _Cnn = null;
+            koneksi getCnn = new koneksi();
+            _Cnn = getCnn.getConnection();
+            String sql = " select * from sopir where nama_sopir='"+cmbsopir.getSelectedItem()+"'";
+            Statement stm = _Cnn.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
+            if(rs.next()){
+                idsopir = rs.getInt("kd_sopir");
+            } 
+          } catch (Exception e) {
+              JOptionPane.showMessageDialog(this, e);
+          }
+    }//GEN-LAST:event_cmbsopirActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
@@ -682,75 +787,131 @@ public class transaksi extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_btnHapusActionPerformed
 
-    private void cmbsopirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbsopirActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tbl_transaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_transaksiMouseClicked
+        // TODO add your handling code here:
+        txt_kd.setEnabled(false);
+        btnsimpan.setEnabled(false);
+        btnEdit.setEnabled(true);
+        btnHapus.setEnabled(true);
+        
+        String kd_inventaris = tbl_transaksi.getValueAt(tbl_transaksi.getSelectedRow(), 0).toString();
         try {
-            _Cnn = null;
-            koneksi getCnn = new koneksi();
+            _Cnn = null ;
             _Cnn = getCnn.getConnection();
-            String sql = " select * from sopir where nama_sopir='"+cmbsopir.getSelectedItem()+"'";
+            String sql = " select * from inventaris where kd_inventaris='"+kd_inventaris+"'";
             Statement stm = _Cnn.createStatement();
             ResultSet rs = stm.executeQuery(sql);
-            if(rs.next()){
-                idsopir = rs.getInt("kd_sopir");
+            if(rs.first()){
+                txt_kd.setText(rs.getString(1));
+                txt_penyewa.setText(rs.getString(2));
+                cmb_pegawai.setSelectedItem(rs.getString(3));
+                cmbmobil.setSelectedItem(rs.getString(4));
+                cmbsopir.setSelectedItem(rs.getString(5));
+                txt_tglpinjam.setText(rs.getString(6));
+                txt_tglkembali.setText(rs.getString(7));
+                txt_lamasewa.setText(rs.getString(8));
+                txt_ttlbayar.setText(rs.getString(9));
+                
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
         }
-    }//GEN-LAST:event_cmbsopirActionPerformed
+    }//GEN-LAST:event_tbl_transaksiMouseClicked
 
-    private void cmbmobilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbmobilActionPerformed
+    private void btn_kembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliActionPerformed
         // TODO add your handling code here:
-        try {
-            _Cnn = null;
-            koneksi getCnn = new koneksi();
-            _Cnn = getCnn.getConnection();
-            String sql = " select * from mobil where merk='"+cmbmobil.getSelectedItem()+"'";
-            Statement stm = _Cnn.createStatement();
-            ResultSet rs = stm.executeQuery(sql);
-            if(rs.next()){
-                idmobil = rs.getInt("kd_mobil");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
-    }//GEN-LAST:event_cmbmobilActionPerformed
-
-    private void cmb_pegawaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_pegawaiActionPerformed
-        // TODO add your handling code here:
-        try {
-            _Cnn = null;
-            koneksi getCnn = new koneksi();
-            _Cnn = getCnn.getConnection();
-            String sql = " select * from petugas where nama='"+cmb_pegawai.getSelectedItem()+"'";
-            Statement stm = _Cnn.createStatement();
-            ResultSet rs = stm.executeQuery(sql);
-            if(rs.next()){
-                idpegawai = rs.getInt("kd_petugas");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
-    }//GEN-LAST:event_cmb_pegawaiActionPerformed
-
-    private void txt_lamasewaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_lamasewaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_lamasewaActionPerformed
-
-    private void txt_penyewaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_penyewaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_penyewaActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        halutama menu = new halutama(hak_akses);
+        halutama hal =  new halutama(hak_akses);
         this.dispose();
-        menu.show();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        hal.show();
+    }//GEN-LAST:event_btn_kembaliActionPerformed
 
-    private void txt_ttlbayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_ttlbayarActionPerformed
-    
-    }//GEN-LAST:event_txt_ttlbayarActionPerformed
+    private void txtcariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcariKeyReleased
+        // TODO add your handling code here:
+        
+         String[] kolom = {"KODE","PENYEWA","PETUGAS","MOBIL","SOPIR","TGL PINJAM","TGL KEMBALI","LAMA","TOTAL BAYAR"};
+        _table = new DefaultTableModel(null,kolom){
+        Class[] types = new Class[]{
+            java.lang.String.class,
+            java.lang.String.class,
+            java.lang.String.class,
+            java.lang.String.class,
+            java.lang.String.class,
+            java.lang.String.class,
+            java.lang.String.class,
+            java.lang.String.class,
+            java.lang.String.class
+        };
+        public Class getColumnClass(int columnIndex){
+            return types [columnIndex];
+        }
+        public boolean isCellEditable(int row,int col){
+            int cola = _table.getColumnCount();
+            return (col < cola )? false:true;
+        }
+    };
+        tbl_transaksi.setModel(_table);
+        try {
+            _Cnn = null;
+            koneksi getCnn = new koneksi();
+            _Cnn = getCnn.getConnection();
+            HapusTable();
+            String sql = ""+
+                    "select inventaris.kd_inventaris,inventaris.nama_penyewa,petugas.nama,mobil.merk,sopir.nama_sopir,inventaris.tgl_pinjam,inventaris.tgl_kembali,inventaris.lama_sewa,inventaris.total_bayar from inventaris,petugas,mobil,sopir where petugas.kd_petugas=inventaris.petugas_kd and mobil.kd_mobil=inventaris.mobil_kd and sopir.kd_sopir=inventaris.sopir_kd and (inventaris.kd_inventaris='"+txtcari.getText()+"' or inventaris.nama_penyewa='"+txtcari.getText()+"' or petugas.nama='"+txtcari.getText()+"' or mobil.merk='"+txtcari.getText()+"' or sopir.nama_sopir='"+txtcari.getText()+"' or inventaris.tgl_pinjam='"+txtcari.getText()+"' or inventaris.tgl_kembali='"+txtcari.getText()+"' or inventaris.lama_sewa='"+txtcari.getText()+"' or inventaris.total_bayar='"+txtcari.getText()+"')";
+                     Statement stm = _Cnn.createStatement();
+                     ResultSet rs = stm.executeQuery(sql);
+                    while(rs.next()){
+                    String xkd_inventaris = rs.getString(1);
+                    String xkd_penyewa = rs.getString(2);
+                    String xkd_pegawai = rs.getString("nama");
+                    String xkd_mobil = rs.getString("merk");
+                    String xkd_sopir = rs.getString("nama_sopir");
+                    String xtgl_pinjam = rs.getString(6);
+                    String xtgl_kembali = rs.getString(7);
+                    String xlamasewa = rs.getString(8);
+                    String xtotalbayar = rs.getString(9);
+                Object[] data = {xkd_inventaris,xkd_penyewa,xkd_pegawai,xkd_mobil,xkd_sopir,xtgl_pinjam,xtgl_kembali,xlamasewa,xtotalbayar};
+                _table.addRow(data);
+                }
+                tbl_transaksi.getColumnModel().getColumn(0).setPreferredWidth(75);
+                tbl_transaksi.getColumnModel().getColumn(1).setPreferredWidth(600);
+                tbl_transaksi.getColumnModel().getColumn(2).setPreferredWidth(600);
+                tbl_transaksi.getColumnModel().getColumn(3).setPreferredWidth(600);
+                tbl_transaksi.getColumnModel().getColumn(4).setPreferredWidth(600);
+                tbl_transaksi.getColumnModel().getColumn(5).setPreferredWidth(600);
+                tbl_transaksi.getColumnModel().getColumn(6).setPreferredWidth(600);
+                tbl_transaksi.getColumnModel().getColumn(7).setPreferredWidth(600);
+                tbl_transaksi.getColumnModel().getColumn(8).setPreferredWidth(600);
+                
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,"Error : "+ ex);
+        }
+    }//GEN-LAST:event_txtcariKeyReleased
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+        LoadData();
+        form_clear();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void btnCetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCetakActionPerformed
+        // TODO add your handling code here:
+        try {
+            dispose();
+            File file = new File("src/rentalmobil/laporantransaksi.jrxml");
+            jasDes = JRXmlLoader.load(file);
+            jasRep = JasperCompileManager.compileReport(jasDes);
+            param.clear();
+            jasPrint = JasperFillManager.fillReport(jasRep, param,_Cnn);
+            JasperViewer.viewReport(jasPrint, false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+    }//GEN-LAST:event_btnCetakActionPerformed
 
     /**
      * @param args the command line arguments
@@ -758,20 +919,22 @@ public class transaksi extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCetak;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnRefresh;
+    private javax.swing.JButton btn_kembali;
     private javax.swing.JButton btnsimpan;
     private javax.swing.JComboBox<String> cmb_pegawai;
     private javax.swing.JComboBox<String> cmbmobil;
     private javax.swing.JComboBox<String> cmbsopir;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -795,5 +958,6 @@ public class transaksi extends javax.swing.JFrame {
     private javax.swing.JTextField txt_tglkembali;
     private javax.swing.JTextField txt_tglpinjam;
     private javax.swing.JTextField txt_ttlbayar;
+    private javax.swing.JTextField txtcari;
     // End of variables declaration//GEN-END:variables
 }

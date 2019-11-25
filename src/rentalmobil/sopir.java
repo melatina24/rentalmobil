@@ -686,12 +686,14 @@ public class sopir extends javax.swing.JFrame {
 
     private void btn_delActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delActionPerformed
         // TODO add your handling code here:
+        String kd_sopir =tbl_sopir.getValueAt(tbl_sopir.getSelectedRow(),0).toString();
+
         try {
             konek = null;
             konek=getCnn.getConnection();
-            String sql ="DELETE FROM sopir WHERE kd_sopir='"+txt_id.getText()+"'";
+            String sqldel ="DELETE FROM sopir WHERE kd_sopir='"+kd_sopir+"'";
             Statement state =konek.createStatement();
-            state.executeUpdate(sql);
+            state.executeUpdate(sqldel);
             HapusTable();
             tampildata();
             JOptionPane.showMessageDialog(this, "Data Berhasil dihapus!");

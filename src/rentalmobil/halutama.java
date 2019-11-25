@@ -4,13 +4,31 @@
  * and open the template in the editor.
  */
 package rentalmobil;
+import java.io.File;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
-/**
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+/*
  *
  * @author HP
  */
 public class halutama extends javax.swing.JFrame {
-String hak_akses;
+    Connection _Cnn;
+koneksi getCnn = new koneksi();
+    
+    String hak_akses;
+    JasperDesign jasDes;
+    JasperReport jasRep;
+    JasperPrint jasPrint;
+    Map<String, Object> param = new HashMap<String, Object>();
     /**
      * Creates new form halutama
      */
@@ -630,6 +648,17 @@ String hak_akses;
 
     private void btnlaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlaporanActionPerformed
         // TODO add your handling code here:
+        try {
+            dispose();
+            File file = new File("src/rentalmobil/laporantransaksi.jrxml");
+            jasDes = JRXmlLoader.load(file);
+            jasRep = JasperCompileManager.compileReport(jasDes);
+            param.clear();
+            jasPrint = JasperFillManager.fillReport(jasRep, param,_Cnn);
+            JasperViewer.viewReport(jasPrint, false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
     }//GEN-LAST:event_btnlaporanActionPerformed
 
     /**

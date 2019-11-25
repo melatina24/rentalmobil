@@ -262,6 +262,11 @@ int idkategori;
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         txt_cari.setBorder(null);
+        txt_cari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_cariKeyReleased(evt);
+            }
+        });
 
         btn_search.setBackground(new java.awt.Color(255, 255, 255));
         btn_search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rentalmobil/img/icons8-search-48.png"))); // NOI18N
@@ -663,7 +668,25 @@ int idkategori;
 
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
         // TODO add your handling code here:
-        String cari =txt_cari.getText();
+//        String cari =txt_cari.getText();
+//        
+    }//GEN-LAST:event_btn_searchActionPerformed
+
+    private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
+        // TODO add your handling code here:
+        halutama menu = new halutama(hak_akses);
+        this.dispose();
+        menu.show();
+    }//GEN-LAST:event_btn_backActionPerformed
+
+    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
+        // TODO add your handling code here:
+        LoadData();
+        form_clear();
+    }//GEN-LAST:event_btn_refreshActionPerformed
+
+    private void txt_cariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cariKeyReleased
+        // TODO add your handling code here:
         String[] kolom = {"KD MOBIL","NO POLISI","MERK","HARGA","KATEGORI"};
         _table = new DefaultTableModel(null,kolom){
         Class[] types = new Class[]{
@@ -688,8 +711,7 @@ int idkategori;
             koneksi getCnn = new koneksi();
             _Cnn = getCnn.getConnection();
             HapusTable();
-            String sql =  "select mobil.kd_mobil,mobil.no_polisi,mobil.merk,mobil.harga,kategori.jenis_mobil from mobil, kategori where kategori.kd_kategori= mobil.kategori_kd"
-                    +"WHERE mobil.kd_mobil like'%"+cari+"%'";
+            String sql =  "select mobil.kd_mobil,mobil.no_polisi,mobil.merk,mobil.harga,kategori.jenis_mobil from mobil, kategori where kategori.kd_kategori= mobil.kategori_kd and (mobil.kd_mobil='"+txt_cari.getText()+"' or mobil.no_polisi='"+txt_cari.getText()+"' or mobil.merk='"+txt_cari.getText()+"' or mobil.harga='"+txt_cari.getText()+"' or kategori.jenis_mobil='"+txt_cari.getText()+"')";
             Statement stm = _Cnn.createStatement();
             ResultSet rs = stm.executeQuery(sql);
                 while(rs.next()){
@@ -711,20 +733,7 @@ int idkategori;
             JOptionPane.showMessageDialog(this,"Error : "+ ex);
         }
         
-    }//GEN-LAST:event_btn_searchActionPerformed
-
-    private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
-        // TODO add your handling code here:
-        halutama menu = new halutama(hak_akses);
-        this.dispose();
-        menu.show();
-    }//GEN-LAST:event_btn_backActionPerformed
-
-    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
-        // TODO add your handling code here:
-        LoadData();
-        form_clear();
-    }//GEN-LAST:event_btn_refreshActionPerformed
+    }//GEN-LAST:event_txt_cariKeyReleased
 
     /**
      * @param args the command line arguments
